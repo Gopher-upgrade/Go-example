@@ -3,6 +3,7 @@ package Debug
 import (
 	"runtime"
 	"fmt"
+	"strings"
 )
 
 /**
@@ -14,4 +15,19 @@ func ErrorMsg(entity error) {
 		fmt.Printf(" [调用方法] %s \n [调用位置] %s %v \n [ErrorMsg] %s\n", f.Name(), file, line, entity)
 	}
 	return
+}
+
+func RenderLog(role string, sn int, format string, args ...interface{}) {
+	if !strings.HasSuffix(format, "\n") {
+		format += "\n"
+	}
+	fmt.Printf("%s[%d]: %s", role, sn, fmt.Sprintf(format, args...))
+}
+
+func RenderServer(format string, args ...interface{}){
+	RenderLog("Server", 0, format, args...)
+}
+
+func RenderClient(format string, args ...interface{}){
+	RenderLog("Client", 0, format, args...)
 }
